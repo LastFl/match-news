@@ -181,7 +181,7 @@ def home_block(records: list[dict]) -> str:
     rows = []
     for rec in ranked:
         sig = scores(rec)
-        rows.append(f'''        <li><a href="matches/{esc(rec['slug'])}/">{esc(rec['title'])}</a><span>Rotation Risk: {esc(sig['Rotation Risk'][0])} · Injury Pressure: {esc(sig['Injury Pressure'][0])} · Market Confidence: {esc(sig['Market Confidence'][0])}</span></li>''')
+        rows.append(f'''        <li><a href="/match-news/matches/{esc(rec['slug'])}/">{esc(rec['title'])}</a><span>Rotation Risk: {esc(sig['Rotation Risk'][0])} · Injury Pressure: {esc(sig['Injury Pressure'][0])} · Market Confidence: {esc(sig['Market Confidence'][0])}</span></li>''')
     return "\n".join([
         '<!-- match-signals-home:start -->',
         '    <section class="editorial-modules match-signals-home" aria-labelledby="signals-home-heading">',

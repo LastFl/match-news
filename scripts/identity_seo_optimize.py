@@ -228,13 +228,13 @@ def render_hub(slug: str, meta: dict, matches: list[dict], today, modified: date
     items = []
     for idx, rec in enumerate(ordered, 1):
         items.append(f'''<li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-  <a itemprop="item" href="../matches/{esc(rec['slug'])}/"><span itemprop="name">{esc(rec['title'])}</span></a>
+  <a itemprop="item" href="/match-news/matches/{esc(rec['slug'])}/"><span itemprop="name">{esc(rec['title'])}</span></a>
   <p>{esc(editorial_reason(rec))}</p>
   <meta itemprop="position" content="{idx}" />
 </li>''')
     list_html = "\n".join(items) if items else "<li>No current match-news pages are available for this league yet.</li>"
     pick_html = "\n".join(
-        f"<li><a href=\"../matches/{esc(rec['slug'])}/\">{esc(rec['title'])}</a><span>{esc(editorial_reason(rec))}</span></li>"
+        f"<li><a href=\"/match-news/matches/{esc(rec['slug'])}/\">{esc(rec['title'])}</a><span>{esc(editorial_reason(rec))}</span></li>"
         for rec in current[:5]
     ) or "<li>New editor picks will appear after the next publish cycle.</li>"
     payload = {
@@ -265,11 +265,11 @@ def render_hub(slug: str, meta: dict, matches: list[dict], today, modified: date
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="{IMAGE}" />
   <script type="application/ld+json">{json.dumps(payload, ensure_ascii=False, separators=(',', ':'))}</script>
-  <link rel="stylesheet" href="../styles.css" />
+  <link rel="stylesheet" href="/match-news/styles.css" />
 </head>
 <body class="match-news-home">
   <main>
-    <nav class="breadcrumb" aria-label="Breadcrumb"><a href="../">Match News</a> / {esc(meta['name'])}</nav>
+    <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/match-news/">Match News</a> / {esc(meta['name'])}</nav>
     <header>
       <p class="kicker">League hub</p>
       <h1>{esc(meta['name'])}</h1>

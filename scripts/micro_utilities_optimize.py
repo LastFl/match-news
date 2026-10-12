@@ -180,11 +180,11 @@ def page_shell(slug: str, title: str, desc: str, body: str, item_list: list[dict
   <meta property="og:image" content="{IMAGE}" />
   <meta name="twitter:card" content="summary_large_image" />
   <script type="application/ld+json">{json.dumps({"@context":"https://schema.org","@graph":graph}, ensure_ascii=False, separators=(',', ':'))}</script>
-  <link rel="stylesheet" href="../styles.css" />
+  <link rel="stylesheet" href="/match-news/styles.css" />
 </head>
 <body class="match-news-home">
   <main>
-    <nav class="breadcrumb"><a href="../">Match News</a> / {esc(title)}</nav>
+    <nav class="breadcrumb"><a href="/match-news/">Match News</a> / {esc(title)}</nav>
     <header>
       <p class="kicker">FootballAnt micro tool</p>
       <h1>{esc(title)}</h1>
@@ -198,7 +198,7 @@ def page_shell(slug: str, title: str, desc: str, body: str, item_list: list[dict
 
 
 def match_link(rec: dict, note: str) -> str:
-    return f'<li><a href="../matches/{esc(rec["slug"])}/">{esc(rec["title"])}</a><span>{esc(note)}</span></li>'
+    return f'<li><a href="/match-news/matches/{esc(rec["slug"])}/">{esc(rec["title"])}</a><span>{esc(note)}</span></li>'
 
 
 def stable_page(recs: list[dict], today) -> tuple[str, str, str, list[dict]]:
@@ -208,7 +208,7 @@ def stable_page(recs: list[dict], today) -> tuple[str, str, str, list[dict]]:
     for r in ranked:
         score = stable_score(r)
         read = "Clean XI read" if score >= 74 else "Mostly clear" if score >= 62 else "Watch late team news" if score >= 48 else "Lineup panic risk"
-        rows.append(f'''<tr><td><a href="../matches/{esc(r['slug'])}/">{esc(r['title'])}</a></td><td>{score}</td><td>{esc(read)}</td><td>{esc(sig_label(r, 'Lineup Certainty'))}</td><td>{esc(sig_label(r, 'Injury Pressure'))}</td><td>{esc(sig_label(r, 'Odds Volatility Watch'))}</td></tr>''')
+        rows.append(f'''<tr><td><a href="/match-news/matches/{esc(r['slug'])}/">{esc(r['title'])}</a></td><td>{score}</td><td>{esc(read)}</td><td>{esc(sig_label(r, 'Lineup Certainty'))}</td><td>{esc(sig_label(r, 'Injury Pressure'))}</td><td>{esc(sig_label(r, 'Odds Volatility Watch'))}</td></tr>''')
     body = f'''    <section>
       <h2>Lineup Clarity Board</h2>
       <p>Matches where the pre-match read looks clearer — or where late team news could still ruin the picture. Signal-based, not a betting tip.</p>
@@ -226,7 +226,7 @@ def mood_page(recs: list[dict], today) -> tuple[str, str, str, list[dict]]:
     for r in ranked:
         mood = mood_score(r)
         label = mood_label(mood)
-        rows.append(f'''<tr><td><a href="../matches/{esc(r['slug'])}/">{esc(r['title'])}</a></td><td>{mood}</td><td>{esc(label)}</td><td>{esc(sig_label(r, 'Market Confidence'))}</td><td>{esc(sig_label(r, 'Injury Pressure'))}</td></tr>''')
+        rows.append(f'''<tr><td><a href="/match-news/matches/{esc(r['slug'])}/">{esc(r['title'])}</a></td><td>{mood}</td><td>{esc(label)}</td><td>{esc(sig_label(r, 'Market Confidence'))}</td><td>{esc(sig_label(r, 'Injury Pressure'))}</td></tr>''')
     body = f'''    <section>
       <h2>Fan Mood Index</h2>
       <p>A signal-driven estimate of pre-match fan confidence. It is a sentiment proxy, not a fan poll.</p>
@@ -276,9 +276,9 @@ def update_sitemap(root: Path, slugs: list[str], today: str) -> None:
 
 def homepage_block() -> str:
     items = [
-        ("Lineup Clarity Board", "todays-most-stable-matches/", "Which matches look clear — and which still smell like lineup panic."),
-        ("Fan Mood Index", "fan-mood-index/", "A signal-driven estimate of pre-match fan confidence, not a poll."),
-        ("Chaos Match Watch", "match-fortune-today/", "Trap-game alerts, rotation anxiety and late-drama energy."),
+        ("Lineup Clarity Board", "/match-news/todays-most-stable-matches/", "Which matches look clear — and which still smell like lineup panic."),
+        ("Fan Mood Index", "/match-news/fan-mood-index/", "A signal-driven estimate of pre-match fan confidence, not a poll."),
+        ("Chaos Match Watch", "/match-news/match-fortune-today/", "Trap-game alerts, rotation anxiety and late-drama energy."),
     ]
     cards = "\n".join(f'        <li><a href="{href}">{esc(label)}</a><span>{esc(note)}</span></li>' for label, href, note in items)
     return f'''<!-- micro-utilities:start -->

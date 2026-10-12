@@ -151,7 +151,7 @@ def build_match_page(candidate, more_slugs:)
       <meta name="description" content="#{html_escape(description)}" />
       <meta name="robots" content="index,follow" />
       <link rel="canonical" href="#{html_escape(canonical)}" />
-      <link rel="stylesheet" href="../../styles.css" />
+      <link rel="stylesheet" href="/match-news/styles.css" />
     </head>
     <body>
       <main>
@@ -209,14 +209,14 @@ def build_match_page(candidate, more_slugs:)
           <section>
             <h2>More lineup previews on FootballAnt</h2>
             <ul>
-    #{more_items.map { |i| "          <li><a href=\"../#{html_escape(i[:slug])}/\">#{html_escape(i[:label])} predicted lineups and preview</a></li>" }.join("\n")}
+    #{more_items.map { |i| "          <li><a href=\"/match-news/matches/#{html_escape(i[:slug])}/\">#{html_escape(i[:label])} predicted lineups and preview</a></li>" }.join("\n")}
             </ul>
           </section>
           <section>
             <h2>More football lineup predictions</h2>
             <ul>
-              <li><a href="../../latest-football-lineup-predictions/">Latest football lineup predictions</a></li>
-              <li><a href="../../">Football lineup predictions homepage</a></li>
+              <li><a href="/match-news/latest-football-lineup-predictions/">Latest football lineup predictions</a></li>
+              <li><a href="/match-news/">Football lineup predictions homepage</a></li>
             </ul>
           </section>
 
@@ -296,11 +296,11 @@ def update_latest_lists(repo_root, new_entries, max_items:, page_updated_date:)
   # Gather existing slugs from each list to preserve order after new inserts.
   home_range = extract_ol(home_html, heading_id: "latest-heading")
   home_ol = home_html[home_range[0]...home_range[1]]
-  home_existing = home_ol.scan(%r{href="matches/([^/]+)/"}).flatten
+  home_existing = home_ol.scan(%r{href="(?:/match-news/)?matches/([^/]+)/"}).flatten
 
   latest_range = extract_ol(latest_html, heading_id: "article-list-heading")
   latest_ol = latest_html[latest_range[0]...latest_range[1]]
-  latest_existing = latest_ol.scan(%r{href="\.\./matches/([^/]+)/"}).flatten
+  latest_existing = latest_ol.scan(%r{href="(?:/match-news/|\.\./)matches/([^/]+)/"}).flatten
 
   merged_home = (new_entries.map { |e| e[:slug] } + home_existing).uniq.first(max_items)
   merged_latest = (new_entries.map { |e| e[:slug] } + latest_existing).uniq.first(max_items)
@@ -315,8 +315,8 @@ def update_latest_lists(repo_root, new_entries, max_items:, page_updated_date:)
     by_slug[slug] || existing_entry_for_slug(slug) || { slug: slug, title: slug.tr("-", " ").gsub(/\bvs\b/i, "vs"), league: "football" }
   end
 
-  home_items = build_list_items(merged_home_entries, href_prefix: "matches/")
-  latest_items = build_list_items(merged_latest_entries, href_prefix: "../matches/")
+  home_items = build_list_items(merged_home_entries, href_prefix: "/match-news/matches/")
+  latest_items = build_list_items(merged_latest_entries, href_prefix: "/match-news/matches/")
 
   home_html = home_html.dup
   home_html[home_range[0]...home_range[1]] = "<ol class=\"match-list\">\n#{home_items}\n</ol>"

@@ -15,7 +15,7 @@ BASE = "https://www.footballant.com/match-news/"
 FEED_URL = BASE + "feed.xml"
 SITE_TITLE = "FootballAnt Match Signals"
 SITE_DESC = "FootballAnt lineup clarity, fan mood, chaos watch and pre-match football intelligence."
-ROBOTS_RE = re.compile(r'<link rel="alternate" type="application/rss\+xml" title="FootballAnt Match Signals" href="feed.xml"\s*/?>')
+ROBOTS_RE = re.compile(r'<link rel="alternate" type="application/rss\+xml" title="FootballAnt Match Signals" href="(?:/match-news/)?feed.xml"\s*/?>')
 
 
 def clean(text: str) -> str:
@@ -105,7 +105,7 @@ def patch_home(root: Path) -> bool:
     text = path.read_text(encoding="utf-8", errors="ignore")
     if 'type="application/rss+xml"' in text and 'feed.xml' in text:
         return False
-    link = '  <link rel="alternate" type="application/rss+xml" title="FootballAnt Match Signals" href="feed.xml" />\n'
+    link = '  <link rel="alternate" type="application/rss+xml" title="FootballAnt Match Signals" href="/match-news/feed.xml" />\n'
     new = text.replace("</head>", link + "</head>", 1)
     if new != text:
         path.write_text(new, encoding="utf-8")

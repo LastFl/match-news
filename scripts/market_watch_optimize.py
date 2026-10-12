@@ -161,7 +161,7 @@ def load_records(root: Path) -> list[dict]:
 
 def module_item(rec: dict) -> str:
     _, reason = interest_score(rec)
-    return f'<li><a href="matches/{esc(rec["slug"])}/">{esc(rec["title"])}</a><span>{esc(reason)}.</span></li>'
+    return f'<li><a href="/match-news/matches/{esc(rec["slug"])}/">{esc(rec["title"])}</a><span>{esc(reason)}.</span></li>'
 
 
 def homepage_block(records: list[dict]) -> str:
@@ -178,7 +178,7 @@ def homepage_block(records: list[dict]) -> str:
         '          <p class="kicker">Football intelligence feed</p>',
         '          <h2 id="market-watch-heading">What The Market Is Watching Today</h2>',
         '        </div>',
-        '        <a class="section-cta" href="latest-football-lineup-predictions/">Latest updates</a>',
+        '        <a class="section-cta" href="/match-news/latest-football-lineup-predictions/">Latest updates</a>',
         '      </div>',
         '      <p>A quick read on fixtures where lineup uncertainty, major-club interest, source activity or near-kickoff timing can move the prediction.</p>',
         '      <ul class="spotlight-grid">',

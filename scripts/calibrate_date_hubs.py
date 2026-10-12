@@ -62,7 +62,7 @@ def page_records(root: Path) -> list[dict]:
     return records
 
 
-def item_list(entries: list[dict], prefix: str = "../matches/") -> str:
+def item_list(entries: list[dict], prefix: str = "/match-news/matches/") -> str:
     rows = []
     for pos, entry in enumerate(entries, start=1):
         rows.append(
@@ -138,7 +138,7 @@ def render_hub(kind: str, target_date, entries: list[dict], modified: datetime) 
   <meta name="twitter:title" content="{esc(title)}" />
   <meta name="twitter:description" content="{esc(desc)}" />
   <meta name="twitter:image" content="{IMAGE_URL}" />
-  <link rel="stylesheet" href="../styles.css" />
+  <link rel="stylesheet" href="/match-news/styles.css" />
   {hub_json_ld(kind, date_iso, entries, modified)}
 </head>
 <body class="match-news-home">
@@ -157,8 +157,8 @@ def render_hub(kind: str, target_date, entries: list[dict], modified: datetime) 
     <section>
       <h2>More football lineup predictions</h2>
       <ul>
-        <li><a href="../">Football lineup predictions homepage</a></li>
-        <li><a href="../latest-football-lineup-predictions/">Latest football lineup predictions</a></li>
+        <li><a href="/match-news/">Football lineup predictions homepage</a></li>
+        <li><a href="/match-news/latest-football-lineup-predictions/">Latest football lineup predictions</a></li>
       </ul>
     </section>
   </main>
